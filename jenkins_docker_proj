@@ -1,0 +1,133 @@
+github token:latest(26-06)
+
+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
+
+
+---------------------------------------------------------------------------------------------------------------------
+jenkins_server setup:
+
+create 2 instances:
+jenkins_server with security group All-TCP, 8080, anywhere.
+Deployment_server with security group All-TCP,8080, anywhere.
+
+jenkins installation in ubuntu:
+
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk -y
+(sudo) wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins -y
+sudo apt install git
+sudo systemctl status jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+sudo usermod -aG docker jenkins  # adding jenkins user to the docker group
+sudo systemctl restart jenkins  # restarting the jenkins
+
+
+
+Docker installation:
+sudo apt-get update
+ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+ sudo mkdir -p /etc/apt/keyrings
+ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo docker version
+
+-----------------------------
+go to web, past ip:8080
+take /var------
+go to jenkins_server
+sudo cat /var-----
+we get password, paste in webpage, continue, suggested plugins
+create user, glnjenkins, jenkinspass(Remember id,pass) fresh creation, continue, setup done.
+-------------------------------------------
+
+
+
+
+
+
+
+Deployment_server setup:
+
+Docker installation:
+sudo apt-get update
+ sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+ sudo mkdir -p /etc/apt/keyrings
+ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+ echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo docker version
+
+sudo usermod -aG docker ubuntu   #adding ubuntu user to docker group
+
+docker version
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+project:
+Extra:
+1. manage setting--global tool configurations---Add maven, Maven, save      # to download maven from maven repository in background
+2. Docker file is already available in github, the same repo, It is useful for image creage creation [Here using tomcat as base image, /user/local/tomcat, here 
+           tomcat will extract, so. inside this .jar(java app artifact) copying]
+3. Here, tag becomes build number in jenkins(build now)
+4. Creating secret,--- click on pipeline syntax - below--->script in pipeline,---- simple step:withcredentials, bindins:add---secret test,variable:DockerHubPwd,  ---- credentials, add---jenkins,
+        ,, kind:secret text, secret:(type) docker hub password, ID:Any give(DockerHubPwd), Description:Docker Hub Password, add,---- generate pipeline script (copy and paste in pipeline script, add some text)
+5.  If using private repo---- sh "docker login -u dockergln -p ${DockerHubPwd}  ipadress of private repo:port no where docker repo is created"
+                                                                                                   -------or--------
+                                                                                        Dns name  ( mithuntech.com)
+6. installing ssh plugin, -- manage jenkins, manage plugin, available-ssh agent, install without restart.
+7. click on pipeline syntax---- simple step:sshagent, add--jenkins,, kind:ssh username withprivate key,  ID: Docker_Dev_server_SSH, username:ubuntu, privatekey: add--past .pem data, add,, select un=buntu, genetate--(copy & paste in stage) 
+             use publicip or private ip( if in same vpc) in ssh stage,, javawevappcontainer(container name given)
+8. docker rm -f javawevappcontainer(if container already exist delete it), then after create container
+Pipeline Script:
+----------------
+___________________________________________________
+
+node{
+    
+    def buildnumber = BUILD_NUMBER
+    stage("Git Clone"){
+        git url: 'https://github.com/MithunTechnologiesDevOps/java-web-app-docker.git', branch: 'master'
+    }
+    stage("Maven Clen Package"){
+        def mavenHome= tool name: "Maven", type: "maven"
+        sh "${mavenHome}/bin/mvn clean  package"
+    }
+    stage("Build Docker Image"){
+        sh "docker build -t dockergln/java-web-app-docker:${buildnumber} . "
+    }
+    stage("Docker Login And Push"){
+        withCredentials([string(credentialsId: 'dockerid', variable: 'Docker')]) {
+          sh "docker login -u dockergln -p ${Docker}"
+        }
+        sh "docker push dockergln/java-web-app-docker:${buildnumber}"
+    }
+    stage("Deploy Application As Docker Container In Docker Deployment Server"){
+        sshagent(['Docker_Dev_Server_SSH']) {
+       sh "ssh -o StrictHostKeychecking=no ubuntu@54.78.147.55 docker rm -f javawebappcontainer || true"
+        sh "ssh -o StrictHostKeychecking=no ubuntu@54.78.147.55 docker run -d -p 8080:8080 --name javawebappcontainer dockergln/java-web-app-docker:${buildnumber}"
+        
+     }
+    } 
+}
+___________________________________________________
+

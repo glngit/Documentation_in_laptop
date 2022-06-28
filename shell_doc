@@ -1,0 +1,1405 @@
+                                                                    Shell scripting
+                                                                   ------------------
+To exegute shell script in pwd ---> ./demo.sh
+To exegute shell script any where in user home directory ---> export PATH=$PATH:/home/ubuntu/scripts add this path in .bashrc file user home directory
+To create a "user defined variable" ---> GUEST=Dhoni  or guest=Dhoni  #then echo"Hello $GUEST you are my hero  - output is  - Hello Dhoni you are my hero
+variable scopes:
+-------------------
+session scope:
+The variables which are declared in the terminal, Once terminal closed-automatically all variable will gone  Eg: $x=10
+User scope:
+The variables which are declared inside .bashrc file, Thease variables are available for all sessions related to current user. Thease variables cannot be accessed by Other users
+System scope:
+The variables which are declared inside /etc/profile file. Thease variables available for all users and all sessions
+
+variable subtitution: syntax---> ${variablename}  or $variablename
+----------------------
+Command subtitution: syntax ----> $(command)    or  `command`
+-----------------------
+command line arguments:  $./test.sh learning linux is very easy
+-----------------------
+Here,  $# ----> Number of arguments (5)
+       $0 ----> script name (./test.sh)
+       $1 ----> 1 st argument  (learning)
+       $2 ----> 2 nd argument  (linux)
+       $3 ----> 3 rd argument  (is)
+       $4 ----> 4 th argument  (very)
+       $5 ----> 5 th argument  (easy)
+       $* ----> All arguments  (learning-linux-is-very-easy)       // Here IFS "-"
+       $@ ----> All arguments  (learning linux is very easy)
+       $? ----> Represents exit code of previously executed command or script.
+
+Operaters:
+-----------
++ ---> addition
+- ---> subtraction
+* ---> multiplication
+/ ---> division
+% ---> modulo operater
+Relational operaters:
+---------------------
+-gt ---> greater than
+-ge ---> greater than or equal to
+-lt ---> less than
+-le ---> less than or equal to 
+-eq ---> equal to
+-ne ---> not equal to
+Logical operaters:
+-------------------
+-a ---> logical AND
+-o ---> logical OR
+!  ---> logical NOT
+Assignment operater:
+----------------------
+=   // Here Except assignment operater, for all operaters we have to provide space before and after operater
+Performing mathematical operations:
+-----------------------------------
+---> By using "expr" keyword
+---> By using "let" keyword
+---> By using (())
+---> By using []
+bc command:
+------------
+bc means binary calculater. It can perform both integral and floating point arithmetic   //Here  2+2,  2.5+2.5
+
+control statments:
+-----------------
+---> if statment
+---> case statment
+---> while loop
+---> for loop 
+---> until loop
+---> break
+---> continue
+---> exit
+
+if statment:
+-------------
+simple if:
+----------
+if [ condition ]; then  
+      action
+fi
+if-else:
+---------
+if [ condition ]; then
+ action if condition is true
+else
+ action if condition is false
+fi
+Nested if:
+-----------
+if [ condition ]; then
+   .........
+   ...........
+     if [ condition ]; then
+      ...............
+      ...............
+      else
+       ................
+     fi
+else
+...........
+fi
+Ladder-if:
+------------
+if [ condition ]; then
+    action-1
+elif [ conditon ]; then
+    action-2
+elif [ condition ]; then
+    actions-3
+else
+    default action
+fi
+
+Case statment:
+---------------
+case $variable in
+  option1)
+     action1
+     ;;
+  option2)
+     action2
+     ;;
+  option3)
+     action3
+     ;;
+   *)
+    default action
+esac
+
+While loop:
+-------------
+while [ condition ]
+do 
+  body
+done
+
+break statment:
+----------------
+Eg:
+     if [ conditon ]; then
+        action
+        break
+     fi
+
+continue statment:
+---------------------
+Eg:
+   if [ condition ]; then
+         action
+         continue
+   fi
+
+for loop:
+----------
+for variable in item1 item2 item3 item4.....itemn
+do  
+  body
+done
+
+Advanced for loop:
+--------------------
+for ((i=1;i>n;i++))
+do 
+  body
+done
+
+Exit code/ status code:
+----------------------
+we can find the exit code by: $?
+0 ---> command or script executed sucessfully
+1 ---> command or script not executed successfully-Error
+The allowed values for exit code is 0-255
+Eg: exit 1
+File test options:
+--------------------
+-e ---> Returns true if file/directory exists
+-s ---> Returns true if file is non-empty
+-f ---> Returns true if file is a regular file
+-d ---> Returns true if the file is a directory
+-l ---> Returns true if the file is an link file
+-b ---> Returns true if the file is block special file
+-c ---> Returns true if the file is charecter special file
+-r ---> Returns true if current user has read permission
+-w ---> Returns true if the current user has write permission
+-x ---> Returns true if the current user has execute permission
+-o ---> Returns true if current user is owner of the file
+String test options:
+-----------------------
+str1=str2 ---> Returns true if both strings are same
+str1!=str2 ---> Returns true if both strings are different
+-z str ---> Returns true if the string is empty
+-n str ---> Returns true if the string is not empty
+str1 > str2 ---> Returns true if string1 alphabetically greater than string2
+str1 < str2 ---> Returns true if string1 alphabetically lesser than string2
+
+
+
+How to create Arrays:
+----------------------
+--> courses=(java python linux django)   // If you know elements at the begining
+--> courses[0]=java
+    courses[1]=python                     // If we dont know elements at the begening
+    courses[2]=linux
+    courses[3]=django
+    
+    courses[10]=datascience               //we can add elements later also and the index need not in sequence
+    courses[20]=devops
+How to Access Elements:
+--------------------------
+${courses[0]} ---> first element
+${courses[1]} ---> second element
+${courses[@]} ---> all elements present inside array
+${courses[*]} ---> all elements present inside array into a sigle string separated by first character in IFS(internal field saparater)
+${!courses[@]} ---> It retuns all indexes where elements are available
+${#courses[@]} ---> It returns the number elements present inside array
+${#courses[0]} ---> It returns the length of first element.
+
+How to define a function:
+---------------------------
+function_name()
+{
+ commands
+}
+How to call a function:
+-------------------------
+function_name param1 param2 param3 param4 ... paramn      // Here param  means  parameter
+
+Function with parameter:
+--------------------------
+$1 ---> First parameter
+$2 ---> second parameter
+$@ ---> All parameters
+$* ---> All parameters as a string
+$# ---> Total no of parameters
+$0 ---> It is script name but not function name
+
+
+
+
+
+
+
+
+
+
+Sample codes:
+------------
+
+1. code)
+--------
+$:test.sh a.txt (command line argument)
+write a srcipt to take data from a file and print output as required
+---------------
+#! /bin/bash
+fname=$1
+if [ ! -e $fname ]; then
+echo " test: $fname : No such file or directory"
+exit 1
+fi
+if [ -d $fname ]; then
+echo "test:$fname: Is a directory"
+exit 2
+fi 
+if [ ! -s $fname ]; then
+echo "test:$fnamed: Is an empty file "
+exit 3
+fi
+count=1
+while read line
+do 
+echo "    $count   $line"
+let count++
+done < $fname
+-----------
+
+
+For Loop
+------------------------------------------------------------
+
+1.code):
+--------
+write a script that display numbers from 1 to 100, which are divisible by 10
+---------------------------------------
+#! /bin/bash
+count=0
+for num in {1..100}
+do 
+  if [ $[num%10] -eq 0 ]; then
+   echo " $num"
+   let count++
+  fi
+done
+echo "The Number of values:$count"
+--------------------------------------
+
+2.code):
+-------
+Write a script to display all file names present in current working directory
+------------------------------------
+#! /bin/bash
+for fname in *      #Here * means everything inside in pwd
+do 
+  if [ -f $fnamed ]; then 
+   echo $fname
+  fi
+done
+------------------------------------
+
+3.code):
+--------
+Write a script to append current date,time and calender in every .txt file in pwd
+------------------------------------
+#! /bin/bash
+for fname in *.txt
+do 
+date >> $fname 
+cal >> $fname
+done
+------------------------------------
+
+4.code):
+--------
+Write a script that prints all command line arguments
+command line argument: test.sh or test.sh 10 20 (or) test.sh It is very easy
+------------------------------------
+#! /bin/bash
+if [ $# -eq 0 ]; then
+      echo " Command line arguments are not passedd"
+      exit 1
+fi
+count=1
+for arg in $@
+do 
+echo "Command line argument- $count: $arg"
+let count++
+done
+------------------------------------
+
+5.code):
+-------
+Write script to display Employees information where salary is greater than 2500
+Already emp.txt exists with tabular contant
+----------------------------------------
+#! /bin/bash
+for record in $(cat emp.txt)
+do 
+  sal=$(echo $record | cut -d ":" -f 3)          #Here -d means delimeter & -f means field value(colomn no)
+  if [ $sal -gt 2500 ]; then
+         echo $record
+  fi 
+done
+------------------------------------
+
+6.code):
+----------
+Write script to display Employees information where salary is greater than 2500 and city is hyderabad and save to hyd.txt
+-----------------------------------------
+#! /bin/bash
+for record in $(cat emp.txt)
+do
+sal=$(echo $record | cut -d ":" -f 3)
+city=$(echo $record | cut -d ":" -f 4)
+if [ $sal -gt 2500 -a $city = "hyderabad" ]; then
+  echo $record >> hyd.txt
+fi
+done
+ echo "Task completed"
+--------------------------------------------
+
+
+7.code):
+---------
+write a script to display least and highest salaried employee information
+------------------------------------
+For max salaried employee info:
+------------------------------
+#! /bin/bash
+max=$(cat emp.txt | head -1 | cut -d ":" -f 3)
+max_record=$(cat emp.txt | head -1)
+for record in $(cat emp.txt)
+do 
+sal=$(echo $record | cut -d ":" -f 3)
+if [ $sal -gt $max ]; then
+  max=$sal
+  max_record=$record
+fi
+done
+echo " The max salary is: $max"
+echo "The maximum salried Employee information:"
+echo "Employee No:$(echo $max_record | cut -d ":" -f 1)"
+echo "Employee Name:$(echo $max_record | cut -d ":" -f 2)"
+echo "Employee Salary:$(echo $max_record | cut -d ":" -f 3)"
+echo "Employee Address:$(echo $max_record | cut -d ":" -f 4)"
+-----------------------------------------
+
+For min salaried employee info:
+-------------------------------
+#! /bin/bash
+min=$(cat emp.txt | head -1 | cut -d ":" -f 3)
+min_record=$(cat emp.txt | head -1)
+for record in $(cat emp.txt)
+do 
+sal=$(echo $record | cut -d ":" -f 3)
+if [ $sal -lt $min ]; then
+  min=$sal
+  min_record=$record
+fi
+done
+echo " The min salary is: $min"
+echo "The minimum salried Employee information:"
+echo "Employee No:$(echo $min_record | cut -d ":" -f 1)"
+echo "Employee Name:$(echo $min_record | cut -d ":" -f 2)"
+echo "Employee Salary:$(echo $min_record | cut -d ":" -f 3)"
+echo "Employee Address:$(echo $min_record | cut -d ":" -f 4)"
+----------------------------------------------------------
+
+combined code is:
+--------------------------
+#! /bin/bash
+max=$(cat emp.txt | head -1 | cut -d ":" -f 3)
+min=$(cat emp.txt | head -1 | cut -d ":" -f 3)
+max_record=$(cat emp.txt | head -1)
+min_record=$(cat emp.txt | head -1)
+for record in $(cat emp.txt)
+do 
+sal=$(echo $record | cut -d ":" -f 3)
+if [ $sal -gt $max ]; then
+  max=$sal
+  max_record=$record
+fi
+if [ $sal -lt $min ]; then
+  min=$sal
+  min_record=$record
+fi
+done
+echo " The max salary is: $max"
+echo "The maximum salried Employee information:"
+echo "Employee No:$(echo $max_record | cut -d ":" -f 1)"
+echo "Employee Name:$(echo $max_record | cut -d ":" -f 2)"
+echo "Employee Salary:$(echo $max_record | cut -d ":" -f 3)"
+echo "Employee Address:$(echo $max_record | cut -d ":" -f 4)"
+echo
+echo " The min salary is: $min"
+echo "The minimum salried Employee information:"
+echo "Employee No:$(echo $min_record | cut -d ":" -f 1)"
+echo "Employee Name:$(echo $min_record | cut -d ":" -f 2)"
+echo "Employee Salary:$(echo $min_record | cut -d ":" -f 3)"
+echo "Employee Address:$(echo $min_record | cut -d ":" -f 4)"
+------------------------------------------------------------
+
+
+Advance for loop::
+---------------------------------------------------------------------------------
+
+1.code):
+---------
+Write a script to print numbers from 0 to 4 by using advanced for loop
+----------------------------
+#! /bin/bash
+for ((i=0; $i < 5; i++))   #Here   for((i=0;i<5;i++))
+do
+echo $i
+done
+------------------------------
+
+2.code):
+---------
+write a script to print numbers for countdown from provided number to 1 by usding advanced for loop
+------------------------------
+#! /bin/bash
+read -p "Enter n value:" n 
+for((i=$n;i>=1;i--))           #Here   for ((i=n;i>=1;i--))
+do 
+echo $i
+sleep 1
+done
+-----------------------------
+
+3.code):
+---------------
+write a script to display nth table
+----------------------------------
+#! /bin/bash
+read -p "Enter n value:" n
+for ((i=1;i<=10;i++))
+do 
+echo "$n * $i = $[n*i]"
+done
+----------------------------------
+
+4.code):
+------
+write a script to generate hotel bill based on customer selected items.The items and price information is as follows
+-------------------------------------
+#! /bin/bash
+echo " welcome to DURGA HOTEL"
+echo 
+amount=0
+while [ true ]
+do 
+echo "Menu Items:"
+echo "..............................."
+echo "A---> vadapov(Each plate Rs 30/-)"
+echo "B---> Dosa (Each plate Rs 50/-)"
+echo "C---> Poori (Each plate Rs 40/-)"
+echo "D---> Idli(Each plate Rs 25/-)"
+read -p "Choose your required item A|B|C|D:" item
+case $item in 
+ A)
+ read -p "Enter the number of plates of vadapov, you required:" quantity
+ amount=$[amount+quantity*30]
+ ;;
+ B)
+ read -p "Enter the number of plates of Dosa, you required:" quantity
+ amount=$[amount+quantity*50]
+ ;;
+ C)
+ read -p "Enter the number of plates of Poori, you required:" quantity
+ amount=$[amount+quantity*40]
+ ;;
+ D)
+ read -p "Enter the number of plates of Idli, you required:" quantity
+ amount=$[amount+quantity*25]
+ ;;
+ *)
+  echo "Please provide valid option, continue again"
+  continue
+esac
+read -p "Do you want to order any other item [yes|no]:" option
+ case $option in 
+ [Yy]|[Yy][Ee][Ss])
+  continue
+  ;;
+ [Nn]|[Nn][Oo])
+  break
+  ;;
+ esac
+done
+echo " Your total bill amount:$amount"
+echo "Thanks fo rvisiting DURGA HOTEL"
+-----------------------------------------
+
+5.code):
+--------
+write a script to test whether the given number is prime number or not?
+-----------------------------------------
+#! /bin/bash
+read -p "Enter any number to test whether it is prime number or not:" n
+if [ $n -le 1 ]; then 
+ echo "$n is not prime number"
+ exit 1
+fi
+for ((i=2;i<=n/2;i++))
+ do 
+ if [ $[n%i] = 0 ]; then
+ echo "$n is not prime number"
+ exit 2
+fi
+done
+ echo "$n is prime number"
+-------------------------------------------
+
+
+Arrays
+-----------------------------------------------------------------------------------------------------
+1.code):
+-------------------------------------------------------------
+#! /bin/bash
+IFS="-"
+course[0]=java
+course[1]=python
+course[2]=linux
+course[3]=django
+course[10]=datascience
+course[20]=devops
+
+echo "First element: ${course[0]}"
+echo "second element: ${course[1]}"
+echo "ll elements with @: ${course[@]}"
+echo "all elements with *: ${course[*]}"
+echo "the indices where elements are available : ${!course[@]}"
+echo "the total number of elements : ${#course[@]}"
+echo "the length of the first element : ${#course[0]}"
+---------------------------------------------------------------
+
+2.code):
+---------
+write a script to create an array with some elements and print all its elements by using while loop, for loop and advanced for loop?'
+----------------------------------------------
+#! /bin/bash
+declare -a fruits
+fruits=(apple banana mango orange)
+
+echo "All elements by using while loop"
+i=0
+while [ $i -lt ${#fruits[@]} ]
+do 
+ echo ${fruits[$i]}
+let i++
+done
+
+echo 
+echo "All elements using normal for loop"
+for fruits in ${fruits[@]}
+do 
+echo $fruits
+done
+
+echo 
+echo "All elements by using advanced for loop"
+for((i=0;i<${#fruits[@]};i++))
+do 
+echo ${fruits[i]}
+done
+----------------------------------------
+
+3.code):
+--------
+
+#! /bin/bash
+fruits[10]="apple"
+fruits[20]="banana"
+fruits[30]="orange"
+fruits[40]="mango"
+for fruit in ${fruits[@]}
+do
+echo $fruit
+done
+echo "Accessing values based on index:"
+for index in ${!fruits[@]}
+do
+echo ${fruits[$index]}
+done
+-----------------------------
+
+4.code):
+--------
+write a script to store given n numbers into an array
+---------------------------------
+#! /bin/bash
+read -p "Enter number of values:" n
+for((i=0;i<n;i++))
+do 
+read -p "Enter the number-$[j++]:" num[$i]
+done
+echo "Array elements are: ${num[@]}"
+---------------------------------------
+
+5.code):
+-------
+write a script to read n numbers and store inside array. Print the sum of even numbers and odd numbers saparately
+------------------------------------------
+#! /bin/bash
+read -p "Enter the number of values:" n
+for((i=0;i<n;i++))
+do
+read -p "Enter the number:" num[$i]
+done
+
+esum=0
+osum=0
+for val in ${num[@]}
+do
+if [ $[val%2] -eq 0 ]; then
+ let esum=esum+val
+ else
+ let osum=osum+val
+fi
+done 
+echo "The sum of even numbers: $esum"
+echo "The sum of odd numbers: $osum"
+----------------------------------------
+
+6.code):
+--------
+write a script to store all .txt file names present in current working directory into an array and print permissions of every file
+-----------------------------------
+#! /bin/bash
+files=($(ls *.txt))
+for fname in ${files[@]}
+do 
+echo -ne $fname:\t"
+if [ -r $fname ]; then
+  echo -ne "read(y) \t"
+ else 
+  echo -ne "read(n)\t"
+fi
+if [ -w $fname ]; then
+  echo -ne "write(y)\t"
+ else 
+  echo -ne "write(n)\t"
+fi
+if [ -x $fname ]; then
+  echo  "execute(y)"
+ else 
+  echo  "execute(n)"
+fi
+done
+--------------------------
+-------------------------------
+
+
+functions
+------------------------------------------------------
+write function to find factorial of given number
+---------------------------
+
+#! /bin/bash
+factorial()
+{
+n=$1
+fact=1
+while [ $n -gt 1 ]
+do
+let fact=fact*n
+let n--
+done
+echo "The factorial is : $fact"
+}
+read -p "Enter the number to find factorial:" num
+factorial $num
+
+---------------------
+or
+------------------
+#! /bin/bash
+factorial()
+{
+original=$1
+n=$1
+fact=1
+while [ $n -gt 1 ]
+do
+let fact=fact*n
+let n--
+done
+echo "The factorial of $original is: $fact"
+}
+read -p "Enter the number to find factorial:" num
+factorial $num
+------------------------------------
+
+Shell script functions:
+---------------------------------------------------------------------
+
+1.code ):
+------------
+#! /bin/bash
+a=10
+b=20
+echo $[a+b]         # Here this set of commands using regularly
+echo $[a-b]
+echo $[a*b]
+echo $[a/b]
+
+a=100
+b=200
+echo $[a+b]
+echo $[a-b]
+echo $[a*b]
+echo $[a/b]
+
+a=1000
+b=2000
+echo $[a+b]
+echo $[a-b]
+echo $[a*b]
+echo $[a/b]
+--------------------
+
+-----------------------------
+#! /bin/bash
+
+f1()
+{
+  a=$1
+  b=$2
+  echo $[a+b]
+  echo $[a-b]
+  echo $[a*b]
+  echo $[a/b]
+}
+f1 10 20
+f1 100 200
+f1 1000 2000
+--------------------------------
+
+1.code):
+-----------
+write a script to wish
+------------------------------
+#! /bin/bash
+function wish()          # Here    wish()
+{
+echo "Hello friends... Good Morning..."
+}
+wish
+wish
+wish
+------------------------------
+
+2.code):
+-------
+
+-----------------------------
+#! /bin/bash
+f1()
+{
+echo " f1 function"
+f2
+}
+                      # f1, Here calling f1 means error. because f2 not defined
+f2()
+{
+echo "f2 function"
+}
+
+f1             #calling f1 good
+------------------------------
+
+3.code):
+--------
+-----------------------------------
+#! /bin/bash
+function demo()
+{
+echo "First parameter: $1"
+echo "second parameter: $2"
+echo "Third parameter: $3"
+echo "Total number of parameters: $#"
+echo "All parameters with @: $@"
+echo "All parameters with *: $*"
+echo "Scripts Name: $0"
+}
+demo 10 20 30 40 50
+--------------------------------------
+
+----------------------------------
+#! /bin/bash
+function wish ()
+{
+if [ $# -eq 0 ]; then 
+ echo "Hello guest, good morning"
+else
+ echo "Hello $1, good morning"
+fi
+}
+wish durga
+wish
+---------------------------------
+
+write a script that takes two integer numbers as patameters and perfoirm arithmetic operations
+-------------------------------------
+#! /bin/bash
+calc()
+{
+if [ $# -ne 2 ]; then
+ echo "You should pass exactly 2 arguments"
+ echo
+else
+ a=$1
+ b=$2
+ echo "$a + $b = $[a+b]"
+ echo "$a - $b = $[a-b]"
+ echo "$a * $b = $[a*b]"
+ echo "$a / $b = $[a/b]"
+ echo
+fi
+}
+calc 10
+calc 10 20             # It works
+calc 100 200
+calc 1000 2000
+calc 10 10 10
+-------------------------------------
+
+write a function to print all parameters
+----------------------------------------
+#! /bin/bash
+parameter_printing()
+{
+if [ $# -eq 0 ]; then
+ echo " no parameters passed in this function"
+else 
+ echo " All parameters are:"
+ echo ".........................."
+ for param in $@
+   do 
+echo $param
+done
+fi
+}
+parameter_printing 01 20 30 40 50 60 70 80 90 100
+---------------------------------------
+
+):
+write a function to find maximum of two given numbers
+--------------------------------------
+#! /bin/bash
+max()
+{
+if [ $1 -gt $2 ]; then 
+ echo " the biggest number is: $1"
+else
+ echo "the biggest number is: $2"
+fi 
+}
+read -p "Enter first number:" n1
+read -p "Enter second number:" n2
+max $n1 $n2
+----------------------------------
+
+):
+write a function to find maximum of three given numbers
+-----------------------------------
+#! /bin/bash
+max()
+{
+ a=$1
+ b=$2
+ c=$3
+if [ $a -gt $b -a $a -gt $c ]; then
+ echo "Biggest number is: $a"
+elif [ $b -gt $c ]; then 
+ echo "Biggest number is: $b"
+else
+ echo "Biggest number is: $c"
+fi
+}
+read -p "Enter first number:" n1
+read -p "Enter second number:" n2
+read -p "Enter third number:" n3
+max $n1 $n2 $n3
+-------------------------------
+
+):
+write a function to compare the given 2 integers
+-----------------------------------
+#! /bin/bash
+compare()
+{
+if [ $1 -eq $2 ]; then
+ echo "$1 and $2 are equal"
+elif [ $1 -gt $2 ]; then 
+ echo "$1 is greater than $2"
+else
+ echo "$1 is less than $2"
+fi
+}
+compare 10 20
+compare 200 100
+compare 1000 2000
+compare 10 10
+----------------------------------
+
+):
+---
+write a function to find factorial of given integer number
+-------------------------------------
+#! /bin/bash
+factorial()
+{
+original=$1
+n=$1             #Here $1 is first parameter
+fact=1
+while [ $n -gt 1 ]
+do 
+ let fact=fact*n
+ let n--
+done
+echo "The factorial of $original: $fact"
+}
+read -p "Enter any number to find factorial:" num
+factorial $num
+------------------------------------
+
+):
+--
+for a range
+----------------------------------
+#! /bin/bash
+factorial()
+{
+original=$1
+n=$1
+fact=1
+while [ $n -gt 1 ]
+do 
+ let fact=fact*n
+ let n--
+done
+echo "The factorial of $original: $fact"
+}
+for i in {1..10}
+do
+factorial $i
+done
+--------------------------------------
+
+):
+--
+write a function to check whether the given number is even number or not?
+-----------------------------------
+#! /bin/bash
+even_odd()
+{
+n=$1 
+if [ $[n%2] -eq 0 ]; then
+ echo "$n is even number"
+else 
+ echo "$n is an odd number"
+fi
+}
+read -p "Enter any number to test whether it is an even number or odd:" A
+even_odd $A
+-----------------------------------
+
+):
+---
+write a functoin totest the given number is positive or negetive
+-------------------------------------
+#! /bin/bash
+positive_negetive()
+{
+n=$1
+if [ $n -gt 0 ]; then 
+ echo "$n is positive"
+elif [ $n -lt 0 ]; then
+ echo "$n is negetive number"
+else 
+ echo "$n is just zero"
+fi
+}
+read -p "Enter any number to test whether it is positive or negetive:" a
+positive_negetive $a
+------------------------------------
+
+):
+----
+write a function tocheck whether the given number is prime number or not?
+----------------------------------
+#! /bin/bash
+prime_check()
+{
+n=$1
+if [ $n -le 1 ]; then 
+ echo "$n is not a prime number"
+else
+ is_prime=yes
+for ((i=2;i<n;i++))        #Here for((i=2;i<n/2;i++))   same result
+do 
+if [ $[n%i] -eq 0 ]; then 
+ echo "$n is not a prime number"
+ is_prime=no
+ break
+fi
+done
+if [ $is_prime = "yes" ]; then
+ echo "$n is a prime number"
+fi 
+fi
+}
+read -p "Enter any number to test whether it is prime or not:" a
+prime_check $a
+-------------------------------
+
+):
+--
+write a number to generate prime numbers which are lessthan or equal to given number?
+---------------------------------
+#! /bin/bash
+prime_number_generater()
+{
+n=$1
+for((n1=2;n1<=n;n1++))     #Here generating numbers from 2 to n
+do
+is_prime=yes               #declaring a variable as default yes
+for((i=2;i<n1;i++))
+do
+ if [ $[n1%i] -eq 0 ]; then
+  is_prime=no
+  break
+ fi
+done
+if [ $is_prime = yes ]; then
+ echo $n1
+fi
+done
+}
+read -p "Enter N value:" a 
+prime_number_generater $a
+-----------------------------
+
+):
+--
+write a function to generate first n (5 or10) prime numbers?
+-------------------------------
+#! /bin/bash
+prime_number_generater()
+{
+ n=$1
+ count=0
+ for((n1=2;n1>=2;n1++))        //Here for((n1=2;n1++)) means between true
+ do
+  is_prime=yes
+   for((i=2;i<n1;i++))
+   do 
+    if [ $[n1%i] -eq 0 ]; then
+     is_prime=no
+     break
+    fi
+   done
+  if [ $is_prime = yes ]; then
+   echo $n1
+   let count++
+  fi
+  if [ $count -eq $n ]; then
+   break
+  fi
+ done
+}
+read -p "Enter N value:" a 
+prime_number_generater $a
+------------------------------------
+
+
+Variable scope
+-----------------------------------------------------------------------------------------------
+Bydefault an variable is globalvariable we can use any where in the script    #Here x=10
+If we want to use it in a function only we need to add local to it            #Here local x=10
+See manual for more clarity
+
+Eg):
+----
+-------------------------------------------------
+#! /bin/bash
+square()
+{
+n=$1
+ echo "The squre of $n is: $[n*n]"
+}
+read -p "Enter number sdfto find square value:" n
+square $n
+-------------------
+or
+-------------------
+#! /bin/bash
+square()
+{
+                                                       #Here no need of n=$1  ,Because x is global variable
+ echo "The squre of $n is: $[n*n]"
+}
+read -p "Enter number sdfto find square value:" n
+square                                                 #Here no need of $n   ,Because x is global variabl
+--------------------------------------------------
+
+
+Creating codes to practice shell perfectly:
+-------------------------------------------------------------------------------------------------------------------------------------------
+Creating secret agent application
+Rules: 1.The first charecter of the name should be 'd'
+       2.The last charecter of favourite Actor should be 'r'
+       3.The lucky number should be '7'
+       4.The number of characters in his favourite dish should be '>=6'
+---------------------------------------------------------
+1 st way):
+-----------
+#! /bin/bash
+echo "Welcome to secret agent application"
+echo "#####################################  "
+read -p "Enter your name:" name
+read -p "Enter you favourite actor:" actor
+read -p "Enter your lucky number:" lucky
+read -p "Enter your favorite dish:" dish
+first_char=$(echo -n $name | cut -c 1)
+len=$(echo -n $actor | wc -c)
+last_char=$(echo -n $actor | cut -c $len)
+no_of_char_dish=$(echo -n $dish | wc -c)
+if [ $first_char = "d" -a $last_char = "r" -a $lucky -eq 7 -a $no_of_char_dish -ge 6 ]; then
+ echo "Hello secret agent... our next opreration is"
+ echo "We have to kill atleast 10 sleeping students of the class room because they are burden to country"
+else
+ echo "Hello $name, thank you for your information"
+fi
+
+2 nd way):
+------------
+#! /bin/bash
+echo "Welcome to secret agent application"
+echo "#################################"
+
+read -p "Enter your name:" name
+first_char=$(echo $name | cut -c 1)
+ if [ $first_char != "d" ]; then
+  echo "Hello $name, thanks for your information"
+   exit 1
+ fi
+
+read -p "Enter your favourite actor:" actor
+ len=$(echo -n $actor | wc -c)
+ last_char=$(echo -n $actor | cut -c $len)
+ if [ $last_char != "r" ]; then
+   echo " Hello $name, thank you for your information"
+   exit 1
+ fi
+ 
+read -p "Enter your lucky number:" lucky
+ if [ $lucky -ne 7 ]; then
+ echo "Hello $name, thank you for your information"
+  exit 1
+ fi
+ 
+read -p "Enter the name of your favourite dish:" dish
+no_of_char_dish=$(echo -n $dish | wc -c)
+ if [ $no_of_char_dish -le 6 ]; then
+  echo "Hello $name, thank you for your information"
+  exit 1
+ fi
+echo "Hello secret agent ..... our next mission is"
+echo "Killing atleast 10 sleeping students in the class room because they are burden to the country"
+
+App2- Book rental application
+--------------------------------
+The GLN book company needs a way to determine the cost that a student has to pay for renting a book.
+-The cost is dependent on the time of the book is returned.
+-However there are also special retes on Saturday and Sundays.
+The fee structure is shown in the dollowing list:
+
+-The cost is Rs 30/- per day.
+-If the book is returned after 9pm, the student will be charged an extra day.
+-If the book is rented on a sunday, the student will get 50% off for as long as they keep the book.
+-If the book is rented on a saturday, the student will get 30% off as long as they keep the book.
+
+we need to write the code to meet this requirment?
+-----------------------------------------------
+#! /bin/bash
+echo "Welcome to GLN book rental application"
+echo "####################################"
+
+cost_per_day=30
+read -p "Was the book returned before 9pm [Yes|No]:" ontime
+read -p "How many days the book rented:" days_rented
+read -p "What date booke rented:" day_rented
+
+if [ $ontime = "N0" ]; then
+   days_rented=$[days_rented+1]
+fi
+if [ $day_rented = "sunday" ]; then
+ cost=$(echo "$days_rented*$cost_per_day*0.5" | bc)
+elif [ $day_rented = "saterday" ]; then
+ cost=$(echo "$days_rented*$cost_per_day*0.7" | bc)
+else
+ cost=$(echo "$days_rented*$cost_per_day" | bc)
+fi
+echo "The cost of the book rental: Rs" $cost
+original_cost=$[days_rented*cost_per_day]
+discountF=$(echo "$original_cost - $cost" | bc)
+discountI=$(echo "$discountF" | cut -d "." -f 1)
+if [ $discountI -gt 0 ]; then
+ echo "Hello you got discount of $discountF, Enjoy"
+fi
+ echo " visit again"
+---------------------------------------------
+model.2):
+----------
+#! /bin/bash
+echo "Welcome to GLN book rental application"
+echo "##########################################"
+
+cost_per_day=30
+
+read -p "How many days was books rensted:" days_rented
+read -p "What day books rented:" rented_week
+
+h=$(date +%H)
+if [ $h -ge 21 ]; then
+  days_rented=$days_rented+1
+fi
+if [ $rented_week = "sunday" ]; then
+     cost=$(echo "$days_rented*$cost_per_day*0.5" | bc)
+elif [ $rented_week = "saterday" ]; then
+  cost=$(echo "$days_rented*$cost_per_day*0.7" | bc)
+else 
+  cost=$(echo "$days_rented*$cost_per_day" | bc)
+fi
+echo "The cost of book rental: $cost"
+original_cost=$[days_rented*cost_per-day]
+discountF=$(echo "$original_cost - $cost" | bc)
+discountI=$(echo "$discountF" | cut -d "." -f 1)
+if [ $discountI -gt 0 ]; then
+ echo "Hello, you got discount of $discountF, Enjoy"
+fi
+echo "Visit again"
+------------------------------------------
+
+code):
+----------
+Book managment application
+----------------------------------------
+#! /bin/bash
+add_book()
+{
+ read -p "Enter the name of the book you want to add:" newbook
+ books[$i]=$newbook
+ let i++
+ echo "$newbook added succesfully"
+ echo
+}
+delete_book()
+{
+ read -p "Enter the name of the book you want to delete:" book_to_delete
+ available="no"
+ for index in ${!books[@]}
+ do
+ if [ $books[$index] = $book_to_delete ]; then
+ available="yes"
+ unset books[$index]
+ echo "$book_to_delete was deleted successfully"
+ echo
+ break
+ fi
+ done
+ if [ $available="no" ]; then
+ echo " $book_to_delete not available, hence cannt delete"
+ echo
+ fi
+}
+list_books()
+{
+if [ ${#books[@]} -eq 0 ]; then
+ echo "No books are available"
+ echo
+ return 1
+fi
+echo "All available books are"
+echo "-----------------------"
+ for bookname in ${books[@]}
+ do 
+ echo $bookname
+ done
+echo
+}
+echo "Welcome to GLN Book management application"
+echo "#########################################"
+
+declare -a books
+
+i=0 
+while [ true ] 
+do
+read -p "Enter the option you want to perform [add|delete|list|exit]:" option
+ case $option in 
+  add)
+    add_book
+    ;;
+  delete)
+    delete_book
+    ;;
+  list)
+    list_books
+    ;;
+  exit)
+    echo "Thanks for using our application"
+    exit 0
+    ;;
+   *)
+    echo "Sorry invalid option, try again"
+  exit 0
+esac
+done
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
