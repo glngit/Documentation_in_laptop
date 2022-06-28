@@ -1,0 +1,4 @@
+--> Go to instance --> create a dorectory --> git clone <other repo url>  --> go into the downloaded directory, copy files into anether directory,--
+           --outside to current directory -->go to copied directory --> git init --> git add . --> git commit -a -m "commit message" -->
+             git remote add origin <my repo url>  --> git push -u origin master ( provide "github id:glnrao314@gmail.com, pass")
+       -----------files sent to  my github repo
