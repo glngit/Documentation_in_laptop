@@ -1,8 +1,5 @@
-github token:latest(26-06)
 
-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
-
-
+                                                jenkins project
 ---------------------------------------------------------------------------------------------------------------------
 jenkins_server setup:
 
@@ -86,10 +83,10 @@ docker version
 project:
 Extra:
 1. manage setting--global tool configurations---Add maven, Maven, save      # to download maven from maven repository in background
-2. Docker file is already available in github, the same repo, It is useful for image creage creation [Here using tomcat as base image, /user/local/tomcat, here 
-           tomcat will extract, so. inside this .jar(java app artifact) copying]
+2. Docker file is already available in github, in the same repo, It is useful for image creation [Here using tomcat as base image, /user/local/tomcat-->here 
+           tomcat will extract, so. inside this .jar[java app artifact) copying]
 3. Here, tag becomes build number in jenkins(build now)
-4. Creating secret,--- click on pipeline syntax - below--->script in pipeline,---- simple step:withcredentials, bindins:add---secret test,variable:DockerHubPwd,  ---- credentials, add---jenkins,
+4. password:Creating secret,--- click on pipeline syntax - below--->script in pipeline,---- simple step:withcredentials, bindins:add---secret text,variable:DockerHubPwd,  ---- credentials, add---jenkins,
         ,, kind:secret text, secret:(type) docker hub password, ID:Any give(DockerHubPwd), Description:Docker Hub Password, add,---- generate pipeline script (copy and paste in pipeline script, add some text)
 5.  If using private repo---- sh "docker login -u dockergln -p ${DockerHubPwd}  ipadress of private repo:port no where docker repo is created"
                                                                                                    -------or--------
@@ -97,7 +94,8 @@ Extra:
 6. installing ssh plugin, -- manage jenkins, manage plugin, available-ssh agent, install without restart.
 7. click on pipeline syntax---- simple step:sshagent, add--jenkins,, kind:ssh username withprivate key,  ID: Docker_Dev_server_SSH, username:ubuntu, privatekey: add--past .pem data, add,, select un=buntu, genetate--(copy & paste in stage) 
              use publicip or private ip( if in same vpc) in ssh stage,, javawevappcontainer(container name given)
-8. docker rm -f javawevappcontainer(if container already exist delete it), then after create container
+8. docker rm -f javawebappcontainer(if container already exist delete it), then after create container
+9. deployment server ip:8080  &   --/java-web-app [application contex]
 Pipeline Script:
 ----------------
 ___________________________________________________
