@@ -1,0 +1,11 @@
+free style:
+-------------
+scm:
+  git --> Repositoryurl:https://github.com/glngit/mithun_maven_web_app.git
+             ##### Install git in jenkins server where jenkins is installed
+        ---> credentials: Add-jenkins, kind: username with password, username:gitgln, password:github pass, Description:git credentials, add
+            ----> credentials:<none><>  --->   git credentials
+      ---> Branch: master
+  Build ---> Invile top level maven targets, Maven version: Maven  (##### add this maven in global tool configaration), Gols: clean package , save.
+   #####build now: builded .jar file is stored    #########/var/lib/jenkins/workspace/wallmart-dev/target/maven-web-application.war
+                                        /var/lib/jenkins ---> jenkins user home directory, inside that /workspace/wallmart ---> current jenkins job directory location.

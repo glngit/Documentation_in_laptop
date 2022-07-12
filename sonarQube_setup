@@ -1,0 +1,33 @@
+
+SonarQube_server Setup:
+-------------------------
+
+create instance with t2.medium
+
+sudo apt install openjdk-8-jdk -y
+
+java -version
+    openjdk-1.8.--  (ok)
+
+free -h   (Shows the vm hardware)
+
+Installation:
+---------------
+sudo -i
+cd /opt
+apt install wget unzip -y
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.7.0.41497.zip
+          -------or----------   wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.6.zip
+unzip sonarqube-7.6.zip
+ls
+useradd sonar
+visudo  ---or----  vi /etc/sudoers
+    ######   root  ALL=(ALL)  ALL
+             sonar  ALL=(ALL) NOPASS:ALL   (added)
+ls -l    ######root:root
+chown -R sonar:sonar /opt/sonarqube-7.6/    ########### changing ownership of that directory
+ls -l      ############ sonar:sonar
+chmod -R 775 /opt/sonarqube-7.6/   ########### changing permissions of directory
+su - sonar
+############ su: warning: cannot change directory to /home/sonar: No such file or directory [Error].
+

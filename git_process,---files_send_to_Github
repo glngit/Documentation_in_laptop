@@ -1,0 +1,7 @@
+git process to send anether github repository to my git hub repository:
+-------------------------------------------------------------------------
+
+--> Go to instance --> create a directory --> git clone <other repo url>  --> go into the downloaded directory, copy files into anether directory,--
+           --outside to current(cloned) directory -->go to copied(outside) directory --> git init --> git add . --> git commit -a -m "commit message" -->
+             git remote add origin <my repo url>  --> git push -u origin master ( provide "github id:glnrao314@gmail.com, pass")
+    files sent to  my github repo...

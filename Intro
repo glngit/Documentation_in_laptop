@@ -1,0 +1,66 @@
+ESMOB address:gunda.lakshminarasimharao@esmobtech.com
+
+Address: Level 4, Krishe Emrald, Survey No. 11, Kondapur Main Road, 
+Laxmi Cyber City, Whitefields, Kondapur, Hyderabad 500081
+
+IBM:gnara91@in.ibm.com
+Id: 0026ia 744
+Project: Ericson
+aderss: Manyatha teckpark, Nagavara
+living: marathahalli, saibaba temple
+jazz forma
+
+● Tech Mahindra Pvt.Ltd. ( Dec 2017 – Aug 2019 )
+● IBM India Pvt.Ltd. ( Sept 2019 – March 2022 )
+● Persistent Systems Pvt.Ltd ( March 2022 – Till Date )
+
+
+Hai I am lakshmi narasimharao from AndhraPradesh I am having total 4 years experience coming to devops 2.5 years 
+experience my payroll company is ESMOB technologies private LTD I worked for IBM and Tech M through ESMOB
+
+
+as a devops enginineer my technology stack is
+
+For source code management we are using GIT
+
+we are using linux servers on top of AWS Cloud
+
+For Scripting we are using shell
+
+For Containerization -Docker
+
+Build tool using jenkins
+
+For Automation and configuration management, we are using Ansible
+
+
+my roles and responsibilites:
+
+
+I involved provisioning and monitoring AWS resources through aws console and aws cli
+
+providing infrastructure through jenkins jobs using scripts
+
+managing and truble shooting jenkins jobs
+
+createing aws services like VPC,subnets,EBS(Elastic block storage),EC2,s3,EKS(Elastic cluster servicde) etc
+
+Provisioning EC2, ROUTE 53 ,ELB ,EBS infrastructure from AWS as per requirement .
+
+Create Security Groups and IAM policies for user accessibility in AWS.
+
+Provide fixes in case of improper flow of code and pipeline.
+
+Addition of security groups and modifying the route tables for the servers to ensure a secure zone for the
+organization’s data.
+
+Application deployment using Kubernetes manifest files by Jenkins
+
+
+User, Group creation, monitoring and maintaining log for system status/health using Linux commands
+
+Good Knowledge on scheduling jobs using Crontab scheduler
+
+
+
+

@@ -1,0 +1,90 @@
+jenkins project (with docker & k8s):
+-----------------------------------------
+
+stage-1:      1.git clone, 1.normal way:
+
+             2.by adding credentials: Below pipeline-script(pipeline syntax)--> simple step:git:Git, repo url: paste repo url, branch: master, credentials:Add--
+                  --->kind:username with password,username: glngit(github username), password:----(github pass), ID:GIT_CREDENTIALS(anything), description:Git Credentials, add--
+                  -->credentials:<none>
+                                 glngit/****(GitCredentials)
+                  ---> generate pipeline script: ----------------  copy this, paste it in git clone stage
+
+stage.2: maven installation using global tool configuration:
+            jenkins, manage jenkins, global tool configuration, maven: Add Maven ---> name:Maven-3.6.1, install automatically, version:3.6.1, Apply, save
+              -->go to job, configure, pipeline----- write commands [def--means variable setting]
+
+stage.3: Docker build:
+            dockergln/spring-boot-mango ------------ with this name create a Docker image
+           .    -                        ----------- means  Docker file is present in current directory in git hub, Use this to crate--------Docker image.
+             ############## [Here using tomcat as base image, /user/local/tomcat---
+                -->here, tomcat will extract, so. inside this .jar[(java app artifact) copying]---> finally by using this Docker image will create
+
+stage.4: docker login & push:
+             Below pipeline-script(pypeline sytax)--->simple step: with credentials, Bindings-Add:secret text---> variable:DOCKER_HUB_CREDENTIALS  , credentials-Add--
+               ---> kind:secret text, secret:-----(docker hub-password), ID:Docker_HUB_CREDENTIALS(anything), Description:Docker hub credentials, Add--
+                --> credentials:<none><>
+                              Docker hub credentials(Description text), Add --
+                --> Generate pipeline script: copy this, paste in script----> with login command, in place of password=${variable}.
+                 ---> docker push command
+stage.5:  a) INstalling k8s plugin:
+                  jenkins, Manage jenkins, manage plugins ---> Available, search:kubernetes continuous deploy, install without restart--
+                 configuring jenkins to k8s:
+                 ---------------------------
+                   jenkins, credentials, (global)Add credentials,----------> 
+                               ----or----                                                                                                                     ############### Give same name to ID & Description and check..?
+                    Below pipeline-script(pipeline syntax)---> simple step:kubernetes deploy, kubeconfig:--Add,jenkins -----------> kind:kubernetes configuration, ID:KUBERNETES_CLUSTER_CONFIG, Description:kubernates config, kubeconfig:Enter directly, kubeconfig:KUBERNETES_CLUSTER_CONFIG(kubenetes config) --
+                     --->go to master instance, cat .kube/config  ---or----   sudo -i(switch to root) cat .kube/config  ,  copy, from apiversion ------ last, past in enter directly coloum, ok
+                       ---> go to job, configure, pipeline (write command)    configs ---- .yaml file name present in git hub current repo
+                                                             kubeconfigId: ----- ID given when creating credentials
+
+        # This process did not work, suspecting .kube/config is not present in ubuntu user in master node.
+
+
+           b).Installing kubectl(kubeadm,kubelet) in the jenkins server as ubuntu user-- use commands in cluster creation, only kubeadm,kubelet,kubectl part --
+               ---> sudo -i -u jenkins, cd ~, mkdir .klube, vi .kube/config ---> (paste) the data from master-node
+                                                                      ---> go to master node, sudo -i, cat .kube/config (copy) and paste there.
+
+_________________________________________________________________________________________________________________________
+
+node{
+    
+    stage("Git Clone"){
+        git url: 'https://github.com/MithunTechnologiesDevOps/spring-boot-mongo-docker.git'
+    }
+    stage("Maven Clean Package"){
+        def mavenHome = tool name: "Maven-3.6.1", type: "maven"
+        def mavenCMD = "${mavenHome}/bin/mvn "
+        sh "${mavenCMD} clean package"
+    }
+    stage("Build Docker Image"){
+        sh "docker build -t dockergln/spring-boot-mongo ."
+    }
+    stage("Docker Login push"){
+        withCredentials([string(credentialsId: 'Docker-id', variable: 'Docker_k')]) {
+     sh "docker login -u dockergln -p ${Docker_k}"
+     }
+        sh "docker push dockergln/spring-boot-mongo"
+    }
+    /**
+    stage("Deploy Application in k8s Cluster"){
+        kubernetesDeploy(
+            configs: 'springBootMongo.yml', 
+            kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG',
+            enableConfigSubstitution: true
+            )
+    }
+    **/
+    stage ("Deploy To Kubernetes Cluster"){
+     sh 'kubectl apply -f springBootMongo.yml'
+    }
+    
+    
+}
+
+--------------
+/**
+ making this data comment
+**/
+
+_________________________________________________________________________________________________________________________
+

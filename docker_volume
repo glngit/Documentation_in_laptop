@@ -1,0 +1,12 @@
+docker run -dit --name bing-volume -v /root/target2:/chandra -p 8090:80 ubuntu /bin/bash
+      --mount type=bind,source=/root/target,target=/app
+
+-d ----> docker volume
+Here also 2 types:
+  --mount type=volume,source=html-volume,target=usr/share/nginx/html  
+      Here first you need to create html-volume in /var/lib/dokcer 
+       target=usr/share/nginx/html  for  nginx--> default directory
+
+
+  -v html-volume2:/usr/share/nginx/html 
+   html-volume2 ---> creates it self

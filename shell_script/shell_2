@@ -1,0 +1,46 @@
+).file exist or not
+--------------------
+#! /bin/bash
+read -p "Enter the file name:" fname
+fileE=$(ls | grep $fname)
+if [ $fileE = $fname ]; then
+ echo "$fname exists"
+else
+ echo "No"
+fi
+
+#! /bin/bash
+read -p "Enter the first number:" n1
+read -p "Enter the second number:" n2
+echo "1 --- to addition"
+echo "2 --- for subtraction"
+echo "3 --- for multiplication"
+echo "4 --- for devision"
+read -p "Enter the option 1 | 2| 3 |4:" option
+case $option in
+1)
+ echo " $n1 + $n2 is: $[n1+n2]
+  ;;
+2)
+ echo "$n1 - $n2 is: $[n1-n2]
+  ;;
+esac
+
+-----------------------
+#! /bin/bash
+i=0
+while [ $i -le 10 ]
+do 
+ echo $i
+ let i++
+ if [ $i -eq 5 ]; then
+ break
+ fi
+done
+
+
+#! /bin/bash 
+while [ true ]
+do 
+ printf "\n\n\t\t$(date +%H:%M)"
+done
